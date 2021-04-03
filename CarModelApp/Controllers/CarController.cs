@@ -47,12 +47,25 @@ namespace CarModelApp.Controllers
             List<CarModel> cars = carDAO.GetAllCars();
             return View("Index", cars);
         }
-
+        [HttpPost]
         public ActionResult ProcessCreate(CarModel carModel)
         {
             CarDAO carDAO = new CarDAO();
             carDAO.Insert(carModel);
             return View("Details", carModel);
         }
+
+        public ActionResult SearchForm()
+        {
+            return View("SearchForm");
+        }
+
+        public ActionResult Search(string search)
+        {
+            CarDAO carDAO = new CarDAO();
+            List<CarModel> searchResults = carDAO.SearchCar(search);
+            return View("Index", searchResults);
+        }
+
     }
 }

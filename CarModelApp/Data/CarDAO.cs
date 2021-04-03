@@ -116,7 +116,35 @@ namespace CarModelApp.Data
 
         public List<CarModel> SearchCar(string search)
         {
-            throw new NotImplementedException();
+            List<CarModel> carList = new List<CarModel>();
+            //access database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sqlQuery = "SELECT * FROM dbo.Vehicles WHERE Model LIKE @s";
+                
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+                command.Parameters.Add("@s", System.Data.SqlDbType.VarChar).Value = "%" + search + "%";
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        //create a new oblect and add it to the list to return
+                        CarModel car = new CarModel();
+                        car.Id = reader.GetInt32(0);
+                        car.Model = reader.GetString(1);
+                        car.Production = reader.GetInt32(2);
+
+                        carList.Add(car);
+                    }
+                }
+            }
+
+            return carList;
         }
 
         public int Update(CarModel carModel)

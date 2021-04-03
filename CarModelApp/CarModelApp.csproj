@@ -169,6 +169,7 @@
     <Content Include="Views\Car\Index.cshtml" />
     <Content Include="Views\Car\Details.cshtml" />
     <Content Include="Views\Car\CarForm.cshtml" />
+    <Content Include="Views\Car\SearchForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
